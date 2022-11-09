@@ -1,4 +1,5 @@
 extends Node2D
+# extends Node
 export(PackedScene) var MemoryPict
 
 # 画面サイズ
@@ -24,8 +25,12 @@ var QuestionFlag = true
 #ゲーム時間のカウント60秒
 var GameTimeCount = 60
 
+#スコア表示カウント
+var ScoreShowCount = 0
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	$BGM.play()
 	pass # Replace with function body.
 
 # プロセス	
@@ -37,7 +42,7 @@ func _process(_delta):
 			#問題文の作成
 			CreateQuestion()
 			DisplayResultButtton()
-			print("_process(CharaList)",CharaList)
+			#print("_process(CharaList)",CharaList)
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):
 #	pass
@@ -63,8 +68,8 @@ func _on_StartButton_button_down():
 	CharaList = [Inko.KOZAKURA, Inko.BOTAN, Inko.KURUMASAKA, Inko.MOMOIRO, Inko.OBATAN, Inko.OKAME, Inko.OKINA, Inko.SEKISEI, Inko.SHIROHARA, Inko.TAIHAKU, Inko.YOUMU]
 	CharaList.shuffle()
 	InkoList = ["KOZAKURA", "BOTAN", "KURUMASAKA", "MOMOIRO", "OBATAN", "OKAME", "OKINA", "SEKISEI", "SHIROHARA", "TAIHAKU", "YOUMU"]
-	print("StartButton:CharaList",CharaList)
-	print("StartButton:InkoList",InkoList)
+	#print("StartButton:CharaList",CharaList)
+	#print("StartButton:InkoList",InkoList)
 	
 	# 記憶画像の表示
 	DisplayMemoryPict()
@@ -96,7 +101,7 @@ func DisplayMemoryPict():
 
 # 問題文を作成する
 func CreateQuestion():
-	print("CreateQuestion:CharaList",CharaList)
+	#print("CreateQuestion:CharaList",CharaList)
 	# 乱数の初期化
 	randomize()
 	# 計算式の作成
@@ -104,19 +109,19 @@ func CreateQuestion():
 	var i = randi() % CharaList.size()
 	while i == 10 :
 		i = randi() % CharaList.size()
-	print("i",i)
+	#print("i",i)
 	randomize()
 	var k = randi() % CharaList.size()
 	while k == 10 :
 		k = randi() % CharaList.size()
-	print("k",k)
-	print("CreateQuestion（計算式1）",i,CALC_LIST[Calc],k)
-	print("CreateQuestion（計算式2）",InkoList[CharaList[i]],CALC_LIST[Calc],InkoList[CharaList[k]])
+	#print("k",k)
+	#print("CreateQuestion（計算式1）",i,CALC_LIST[Calc],k)
+	#print("CreateQuestion（計算式2）",InkoList[CharaList[i]],CALC_LIST[Calc],InkoList[CharaList[k]])
 	
 	# 計算する
 	Result[FLAG] = true
 	var result = CalcResult(i,k,Calc)
-	print("CreateQuestion（Result）")
+	#print("CreateQuestion（Result）")
 	Result[ITEM] = result
 	
 	# 問題文を表示する Calc i k
@@ -134,7 +139,7 @@ func DisplayQuestion(i,k,string):
 
 # 回答ボタン表示する
 func DisplayResultButtton():
-	print("DisplayResultButtton",CharaList)
+	#print("DisplayResultButtton",CharaList)
 	# 文字列化する
 	var strResult = str(Result[ITEM])
 	# 正解リストに入れる
@@ -144,20 +149,20 @@ func DisplayResultButtton():
 	for _x in range(5):
 		var random = randi() % 10
 		strResult += str(random)
-		print("strResult",strResult)
+		#print("strResult",strResult)
 	# 5文字にする 1文字に分割
 	ResultList = [strResult[0],strResult[1],strResult[2],strResult[3],strResult[4]]
-	print("回答パネル配列",ResultList)
+	#print("回答パネル配列",ResultList)
 	# シャッフル
 	randomize()
 	ResultList.shuffle()
-	print(ResultList)
+	#print(ResultList)
 	# 数字にする # 画像に割り当て
 	# マイナスを10にする　配列化
 	for y in range (ResultList.size()):
 		if ResultList[y] == "-" :
 			ResultList[y] = "10"
-	print ("DisplayResultButtton",ResultList)
+	#print ("DisplayResultButtton",ResultList)
 	$ResultButton/AnimatedSprite.frame = CharaList[ResultList[0].to_int()]
 	$ResultButton2/AnimatedSprite.frame = CharaList[ResultList[1].to_int()]
 	$ResultButton3/AnimatedSprite.frame = CharaList[ResultList[2].to_int()]
@@ -177,28 +182,28 @@ func CalcResult(i,k,Calc):
 		result = MultiplyCalc(i,k)
 #	if Calc == 3 :
 #		DivideCalc(i,k)
-	print ("CalcResult（計算の答え）",result)
+	# print ("CalcResult（計算の答え）",result)
 	return (result)
 	pass # Replace with function body.
 
 # 足し算
 func AddCalc(i,k):
 	var result = i + k
-	print ("AddCalc(足し算の答え)",result)
+	# print ("AddCalc(足し算の答え)",result)
 	return (result)
 	pass # Replace with function body.
 
 # 引き算
 func SubtractCalc(i,k):
 	var result = i - k
-	print ("SubtractCalc(引き算の答え)",result)
+	# print ("SubtractCalc(引き算の答え)",result)
 	return (result)
 	pass # Replace with function body.
 
 # 掛け算
 func MultiplyCalc(i,k):
 	var result = i * k
-	print ("MultiplyCalc(掛け算の答え)",result)
+	# print ("MultiplyCalc(掛け算の答え)",result)
 	return (result)
 	pass # Replace with function body.
 
@@ -217,66 +222,68 @@ func _on_QuestionTimer_timeout():
 	# print(GameTimeCount)
 	# 60秒経過後
 	if GameTimeCount <= 0 :
-		GameStartFlag = false
-		$QuestionTimer.stop()
+		EndGame()
 		
-		#画面の移動
-		$Position2D.position.x -= SCREEN_SIZE_X
-#		var window = JavaScript.get_interface("window")
-#		if window != null and window.RPGAtsumaru:
-#			window.RPGAtsumaru.scoreboards.setRecord(1, Score)
-#			yield(get_tree().create_timer(0.5), "timeout")
-#			window.RPGAtsumaru.scoreboards.display(1)
+	pass # Replace with function body.
+
+# ゲーム終了したとき
+func EndGame():
+	$StartButton.disabled = true
+	GameStartFlag = false
+	$QuestionTimer.stop()
+	#画面の移動
+	$Position2D.position.x -= SCREEN_SIZE_X
+	var send = str(Score)
+	#スコアを送信する
+	JavaScript.eval("window.RPGAtsumaru.scoreboards.setRecord(1, " + send + ")")
+	ScoreShowCount = 0
+	$ScoreShowTimer.start()
+		
 	pass # Replace with function body.
 
 # 回答ボタン１を押したとき
 func _on_ResultButton_button_up():
-	print("回答ボタン１押下",ResultList[0])
-	print("回答",SuccessList)
+	#print("回答ボタン１押下",ResultList[0],"回答",SuccessList)
 	answerVerification(ResultList[0],"ResultButton")
 	pass # Replace with function body.
 
 func _on_ResultButton2_button_up():
-	print("回答ボタン2押下",ResultList[1])
-	print("回答",SuccessList)
+	#print("回答ボタン2押下",ResultList[1],"回答",SuccessList)
 	answerVerification(ResultList[1],"ResultButton2")
 	pass # Replace with function body.
 
 func _on_ResultButton3_button_up():
-	print("回答ボタン3押下",ResultList[2])
-	print("回答",SuccessList)
+	#print("回答ボタン3押下",ResultList[2],"回答",SuccessList)
 	answerVerification(ResultList[2],"ResultButton3")
 	pass # Replace with function body.
 
 func _on_ResultButton4_button_up():
-	print("回答ボタン4押下",ResultList[3])
-	print("回答",SuccessList)
+	#print("回答ボタン4押下",ResultList[3],"回答",SuccessList)
 	answerVerification(ResultList[3],"ResultButton4")
 	pass # Replace with function body.
 
 func _on_ResultButton5_button_up():
-	print("回答ボタン5押下",ResultList[4])
-	print("回答",SuccessList)
+	#print("回答ボタン5押下",ResultList[4],"回答",SuccessList)
 	answerVerification(ResultList[4],"ResultButton5")
 	pass # Replace with function body.
 
 # 正解を照合する
 func answerVerification(answer,ButtonName):
-	print("answerVerification:ResultList",ResultList)
+	#print("answerVerification:ResultList",ResultList)
 	# 10をマイナスに戻す
 	var strAnswer = str(answer)
-	print("answerVerification:answer",strAnswer)
+	#print("answerVerification:answer",strAnswer)
 	if answer == "10" :
 		strAnswer = "-"
-	print("answerVerification:ResultList2",ResultList)
-	print("answerVerification:SuccessList[0]",SuccessList[0])
-	print("answerVerification:answer",strAnswer)
+	#print("answerVerification:ResultList2",ResultList)
+	#print("answerVerification:SuccessList[0]",SuccessList[0])
+	#print("answerVerification:answer",strAnswer)
 	# 正解か不正解か確認する
 	if SuccessList[0] == strAnswer :
-		print("SuccessList",SuccessList,"len(SuccessList)",len(SuccessList))
+		#print("SuccessList",SuccessList,"len(SuccessList)",len(SuccessList))
 		if len(SuccessList) >= 2 :
 			SuccessList = SuccessList.substr(1,-1)
-			print("SuccessList",SuccessList)
+			#print("SuccessList",SuccessList)
 			RightAnswer(0,ButtonName)
 		else :
 			RightAnswer(0,ButtonName)
@@ -285,7 +292,7 @@ func answerVerification(answer,ButtonName):
 	else :
 		RightAnswer(1,ButtonName)
 		QuestionFlag = true
-		print("不正解")
+		#print("不正解")
 	pass # Replace with function body.
 
 # 答えの表示を消すタイマー
@@ -298,7 +305,7 @@ func _on_AnswerTimer_timeout():
 func RightAnswer(answer,ButtonName):
 	# 正解を表示する場所を探す
 	var name = get_node(ButtonName)
-	print(name)
+	#print(name)
 	$AnswerMark.position = name.rect_position + (name.rect_size / 2)
 	# 正解を表示する
 	if answer == 0:
@@ -307,18 +314,23 @@ func RightAnswer(answer,ButtonName):
 		$sec60Label.text = str(GameTimeCount)
 		$ScoreLabel.text = str(Score)
 		$LastScoreLabel.text = str(Score)
-		print("正解")
+		#print("正解")
 	else:
 		GameTimeCount -= 10
 		Score -= 50
 		$sec60Label.text = str(GameTimeCount)
 		$ScoreLabel.text = str(Score)
 		$LastScoreLabel.text = str(Score)
-		
-		print("不正解")
+		#print("不正解")
 	$AnswerMark.frame = answer
 	$AnswerMark.visible = true
 	$AnswerTimer.start()
 	pass # Replace with function body.
 	
 	
+
+func _on_ScoreShowTimer_timeout():
+	JavaScript.eval("window.RPGAtsumaru.scoreboards.display(1)")
+	$StartButton.disabled = false
+	$ScoreShowTimer.stop()
+	pass # Replace with function body.
