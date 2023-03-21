@@ -28,8 +28,14 @@ var GameTimeCount = 60
 #スコア表示カウント
 var ScoreShowCount = 0
 
+#サーバー設定値
+var userid = 0
+var geturl ="http://pomepavi.sakura.ne.jp/database/inkocalc/rank/get_userid.php"
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	# HTTPリクエストを作成する
+	$HTTPRequest2.request(geturl)	
 	$BGM.play()
 	pass # Replace with function body.
 
@@ -48,8 +54,8 @@ func _process(_delta):
 #	pass
 
 #Resultクラスの作成
-var Result = [FLAG,ERORR,ITEM,MESSAGE]
-enum {FLAG,ERORR,ITEM,MESSAGE}
+#var Result = [FLAG,ERORR,ITEM,MESSAGE]
+enum Result {FLAG,ERORR,ITEM,MESSAGE}
 
 # スタートボタンを押す
 func _on_StartButton_button_down():
@@ -119,10 +125,10 @@ func CreateQuestion():
 	#print("CreateQuestion（計算式2）",InkoList[CharaList[i]],CALC_LIST[Calc],InkoList[CharaList[k]])
 	
 	# 計算する
-	Result[FLAG] = true
+	Result.FLAG = true
 	var result = CalcResult(i,k,Calc)
 	#print("CreateQuestion（Result）")
-	Result[ITEM] = result
+	Result.ITEM = result
 	
 	# 問題文を表示する Calc i k
 	DisplayQuestion(CharaList[i],CharaList[k],CALC_LIST[Calc])
@@ -141,7 +147,7 @@ func DisplayQuestion(i,k,string):
 func DisplayResultButtton():
 	#print("DisplayResultButtton",CharaList)
 	# 文字列化する
-	var strResult = str(Result[ITEM])
+	var strResult = str(Result.ITEM)
 	# 正解リストに入れる
 	SuccessList = strResult
 	# ランダムな数字を5文字追加
@@ -233,9 +239,20 @@ func EndGame():
 	$QuestionTimer.stop()
 	#画面の移動
 	$Position2D.position.x -= SCREEN_SIZE_X
+	var username = $UserName.text
 	var send = str(Score)
+	# HTTPリクエストを送信するためのデータを定義する
+	var url ="http://pomepavi.sakura.ne.jp/database/inkocalc/rank/index.php"
+	var data_to_send = {"userid":userid,"username":username,"score":send}
+	var query = JSON.print(data_to_send)
+	print("query",query)
+	var headers = ["Content-Type: application/json"]
+	# HTTPリクエストを作成する
+	$HTTPRequest.request(url, headers, true, HTTPClient.METHOD_POST, query)
+	#var data = {"username": "pomepavi", "password": "Pome65535"}
+
 	#スコアを送信する
-	JavaScript.eval("window.RPGAtsumaru.scoreboards.setRecord(1, " + send + ")")
+	#JavaScript.eval("window.RPGAtsumaru.scoreboards.setRecord(1, " + send + ")")
 	ScoreShowCount = 0
 	$ScoreShowTimer.start()
 		
@@ -326,11 +343,39 @@ func RightAnswer(answer,ButtonName):
 	$AnswerMark.visible = true
 	$AnswerTimer.start()
 	pass # Replace with function body.
-	
-	
 
 func _on_ScoreShowTimer_timeout():
 	JavaScript.eval("window.RPGAtsumaru.scoreboards.display(1)")
 	$StartButton.disabled = false
 	$ScoreShowTimer.stop()
+	pass # Replace with function body.
+
+
+func _on_HTTPRequest_request_completed(result, response_code, headers, body):
+	print("【HTTP1:result】",result)
+	print("【HTTP1:response_code】",response_code)
+	if headers: pass
+	if response_code: pass
+	if result: pass
+	var json = JSON.parse(body.get_string_from_utf8())
+	print("【HTTP1:json.result】",json.result)
+	print("【HTTP1:result】",result)
+	pass # Replace with function body.
+
+
+func _on_HTTPRequest2_request_completed(result, response_code, headers, body):
+	print("【HTTP0:result】",result)
+	print("【HTTP0:response_code】",response_code)
+	if headers: pass
+	if response_code: pass
+	if result: pass
+	var json = JSON.parse(body.get_string_from_utf8())
+	print("【HTTP0:json.result】",json.result)
+	print("【HTTP0:result】",result)
+	if !json.result == null:
+		print("【server:userid】",userid)
+		userid= int(json.result)
+	pass
+	userid = userid+1
+	print("【userid】",userid)
 	pass # Replace with function body.
