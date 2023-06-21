@@ -1,0 +1,622 @@
+[gd_scene load_steps=32 format=2]
+
+[ext_resource path="res://Makinas-4-Square.otf" type="DynamicFontData" id=1]
+[ext_resource path="res://Main.gd" type="Script" id=2]
+[ext_resource path="res://Answer/right.png" type="Texture" id=3]
+[ext_resource path="res://Answer/wrong.png" type="Texture" id=4]
+[ext_resource path="res://character/obatan.png" type="Texture" id=5]
+[ext_resource path="res://character/okina.png" type="Texture" id=6]
+[ext_resource path="res://character/sekisei.png" type="Texture" id=7]
+[ext_resource path="res://character/taihaku.png" type="Texture" id=8]
+[ext_resource path="res://character/kozakura.png" type="Texture" id=9]
+[ext_resource path="res://character/shirohara.png" type="Texture" id=10]
+[ext_resource path="res://character/botan.png" type="Texture" id=11]
+[ext_resource path="res://character/youmu.png" type="Texture" id=12]
+[ext_resource path="res://character/momoiro.png" type="Texture" id=13]
+[ext_resource path="res://character/okame.png" type="Texture" id=14]
+[ext_resource path="res://character/kurumasaka.png" type="Texture" id=15]
+[ext_resource path="res://f3cd40_bfc92be3364f4526bcf0ed21653b342c.wav" type="AudioStream" id=16]
+[ext_resource path="res://Scene/LineEdit.gd" type="Script" id=17]
+
+[sub_resource type="DynamicFont" id=1]
+size = 33
+extra_spacing_bottom = 1
+font_data = ExtResource( 1 )
+
+[sub_resource type="StyleBoxFlat" id=2]
+bg_color = Color( 0.266667, 0.372549, 0.364706, 1 )
+corner_radius_top_left = 15
+corner_radius_top_right = 15
+corner_radius_bottom_right = 15
+corner_radius_bottom_left = 15
+
+[sub_resource type="DynamicFont" id=3]
+size = 80
+font_data = ExtResource( 1 )
+
+[sub_resource type="DynamicFont" id=4]
+size = 30
+font_data = ExtResource( 1 )
+
+[sub_resource type="SpriteFrames" id=5]
+animations = [ {
+"frames": [ ExtResource( 9 ), ExtResource( 11 ), ExtResource( 15 ), ExtResource( 13 ), ExtResource( 5 ), ExtResource( 14 ), ExtResource( 6 ), ExtResource( 7 ), ExtResource( 10 ), ExtResource( 8 ), ExtResource( 12 ) ],
+"loop": true,
+"name": "default",
+"speed": 0.0
+} ]
+
+[sub_resource type="DynamicFont" id=6]
+size = 125
+outline_color = Color( 0.160784, 0.168627, 0.192157, 1 )
+font_data = ExtResource( 1 )
+
+[sub_resource type="SpriteFrames" id=7]
+animations = [ {
+"frames": [ ExtResource( 3 ), ExtResource( 4 ) ],
+"loop": true,
+"name": "default",
+"speed": 5.0
+} ]
+
+[sub_resource type="StyleBoxFlat" id=8]
+bg_color = Color( 0.722961, 0.804688, 0.745308, 1 )
+corner_radius_top_left = 15
+corner_radius_top_right = 15
+corner_radius_bottom_right = 15
+corner_radius_bottom_left = 15
+
+[sub_resource type="DynamicFont" id=9]
+size = 70
+font_data = ExtResource( 1 )
+
+[sub_resource type="DynamicFont" id=10]
+size = 80
+font_data = ExtResource( 1 )
+
+[sub_resource type="DynamicFont" id=12]
+size = 40
+font_data = ExtResource( 1 )
+
+[sub_resource type="DynamicFont" id=13]
+size = 40
+font_data = ExtResource( 1 )
+
+[sub_resource type="StyleBoxFlat" id=15]
+bg_color = Color( 1, 1, 1, 1 )
+border_width_right = 10
+border_color = Color( 0.447059, 0.607843, 0.682353, 1 )
+shadow_color = Color( 0.0196078, 0.0156863, 0.447059, 0.6 )
+
+[sub_resource type="StyleBoxFlat" id=14]
+bg_color = Color( 1, 1, 1, 1 )
+border_width_left = 10
+border_width_right = 10
+border_color = Color( 0.447059, 0.607843, 0.682353, 1 )
+expand_margin_left = 10.0
+shadow_color = Color( 0, 0.0627451, 1, 0.6 )
+
+[node name="Main" type="Node2D"]
+script = ExtResource( 2 )
+
+[node name="Position2D" type="Position2D" parent="."]
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="GameCamera" type="Camera2D" parent="Position2D"]
+anchor_mode = 0
+rotating = true
+current = true
+drag_margin_h_enabled = true
+drag_margin_v_enabled = true
+
+[node name="ColorRect" type="ColorRect" parent="."]
+margin_left = -110.0
+margin_top = -140.0
+margin_right = 1720.0
+margin_bottom = 1530.0
+color = Color( 0.376471, 0.768627, 0.639216, 1 )
+__meta__ = {
+"_edit_lock_": true,
+"_edit_use_anchors_": false
+}
+
+[node name="StartButton" type="Button" parent="."]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = 253.0
+margin_top = 924.0
+margin_right = 477.0
+margin_bottom = 990.0
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_fonts/font = SubResource( 1 )
+text = "START"
+
+[node name="Panel" type="Panel" parent="."]
+margin_left = 759.0
+margin_top = 50.0
+margin_right = 1399.0
+margin_bottom = 630.0
+custom_styles/panel = SubResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ScoreShowTimer" type="Timer" parent="."]
+
+[node name="QuestionTimer" type="Timer" parent="."]
+
+[node name="sec60Label" type="Label" parent="."]
+margin_left = 1235.0
+margin_top = 500.0
+margin_right = 1363.0
+margin_bottom = 596.0
+custom_fonts/font = SubResource( 3 )
+text = "60"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="MemoryPict0" type="Node2D" parent="."]
+position = Vector2( 1075, 560 )
+
+[node name="Label0" type="Label" parent="MemoryPict0"]
+margin_left = -40.0
+margin_top = -24.0
+margin_bottom = 18.0
+custom_fonts/font = SubResource( 4 )
+text = "0"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Sprite" type="Sprite" parent="MemoryPict0"]
+
+[node name="AnimatedSprite" type="AnimatedSprite" parent="MemoryPict0/Sprite"]
+position = Vector2( 40, 0 )
+scale = Vector2( 0.25, 0.234375 )
+frames = SubResource( 5 )
+
+[node name="MemoryPict1" type="Node2D" parent="."]
+position = Vector2( 865, 130 )
+
+[node name="Label1" type="Label" parent="MemoryPict1"]
+margin_left = -40.0
+margin_top = -24.0
+margin_bottom = 18.0
+custom_fonts/font = SubResource( 4 )
+text = "1"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Sprite" type="Sprite" parent="MemoryPict1"]
+
+[node name="AnimatedSprite" type="AnimatedSprite" parent="MemoryPict1/Sprite"]
+position = Vector2( 40, -3 )
+scale = Vector2( 0.25, 0.234375 )
+frames = SubResource( 5 )
+
+[node name="MemoryPict2" type="Node2D" parent="."]
+position = Vector2( 1075, 130 )
+
+[node name="Label2" type="Label" parent="MemoryPict2"]
+margin_left = -40.0
+margin_top = -24.0
+margin_bottom = 18.0
+custom_fonts/font = SubResource( 4 )
+text = "2"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Sprite" type="Sprite" parent="MemoryPict2"]
+
+[node name="AnimatedSprite" type="AnimatedSprite" parent="MemoryPict2/Sprite"]
+position = Vector2( 40, -3 )
+scale = Vector2( 0.25, 0.234375 )
+frames = SubResource( 5 )
+
+[node name="MemoryPict3" type="Node2D" parent="."]
+position = Vector2( 1275, 130 )
+
+[node name="Label3" type="Label" parent="MemoryPict3"]
+margin_left = -40.0
+margin_top = -24.0
+margin_bottom = 18.0
+custom_fonts/font = SubResource( 4 )
+text = "3"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Sprite" type="Sprite" parent="MemoryPict3"]
+
+[node name="AnimatedSprite" type="AnimatedSprite" parent="MemoryPict3/Sprite"]
+position = Vector2( 42, -2 )
+scale = Vector2( 0.25, 0.234375 )
+frames = SubResource( 5 )
+
+[node name="MemoryPict4" type="Node2D" parent="."]
+position = Vector2( 865, 276 )
+
+[node name="Label4" type="Label" parent="MemoryPict4"]
+margin_left = -40.0
+margin_top = -24.0
+margin_bottom = 18.0
+custom_fonts/font = SubResource( 4 )
+text = "4"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Sprite" type="Sprite" parent="MemoryPict4"]
+
+[node name="AnimatedSprite" type="AnimatedSprite" parent="MemoryPict4/Sprite"]
+position = Vector2( 40, -3 )
+scale = Vector2( 0.25, 0.234375 )
+frames = SubResource( 5 )
+
+[node name="MemoryPict5" type="Node2D" parent="."]
+position = Vector2( 1075, 276 )
+
+[node name="Label5" type="Label" parent="MemoryPict5"]
+margin_left = -40.0
+margin_top = -24.0
+margin_bottom = 18.0
+custom_fonts/font = SubResource( 4 )
+text = "5"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Sprite" type="Sprite" parent="MemoryPict5"]
+
+[node name="AnimatedSprite" type="AnimatedSprite" parent="MemoryPict5/Sprite"]
+position = Vector2( 40, -3 )
+scale = Vector2( 0.25, 0.234375 )
+frames = SubResource( 5 )
+
+[node name="MemoryPict6" type="Node2D" parent="."]
+position = Vector2( 1275, 276 )
+
+[node name="Label6" type="Label" parent="MemoryPict6"]
+margin_left = -40.0
+margin_top = -24.0
+margin_bottom = 18.0
+custom_fonts/font = SubResource( 4 )
+text = "6"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Sprite" type="Sprite" parent="MemoryPict6"]
+
+[node name="AnimatedSprite" type="AnimatedSprite" parent="MemoryPict6/Sprite"]
+position = Vector2( 40, -3 )
+scale = Vector2( 0.25, 0.234375 )
+frames = SubResource( 5 )
+
+[node name="MemoryPict7" type="Node2D" parent="."]
+position = Vector2( 869, 426 )
+
+[node name="Label7" type="Label" parent="MemoryPict7"]
+margin_left = -40.0
+margin_top = -24.0
+margin_bottom = 18.0
+custom_fonts/font = SubResource( 4 )
+text = "7"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Sprite" type="Sprite" parent="MemoryPict7"]
+
+[node name="AnimatedSprite" type="AnimatedSprite" parent="MemoryPict7/Sprite"]
+position = Vector2( 40, -3 )
+scale = Vector2( 0.25, 0.234375 )
+frames = SubResource( 5 )
+
+[node name="MemoryPict8" type="Node2D" parent="."]
+position = Vector2( 1075, 426 )
+
+[node name="Label8" type="Label" parent="MemoryPict8"]
+margin_left = -40.0
+margin_top = -24.0
+margin_bottom = 18.0
+custom_fonts/font = SubResource( 4 )
+text = "8"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Sprite" type="Sprite" parent="MemoryPict8"]
+
+[node name="AnimatedSprite" type="AnimatedSprite" parent="MemoryPict8/Sprite"]
+position = Vector2( 40, -3 )
+scale = Vector2( 0.25, 0.234375 )
+frames = SubResource( 5 )
+
+[node name="MemoryPict9" type="Node2D" parent="."]
+position = Vector2( 1275, 426 )
+
+[node name="Label9" type="Label" parent="MemoryPict9"]
+margin_left = -40.0
+margin_top = -24.0
+margin_bottom = 18.0
+custom_fonts/font = SubResource( 4 )
+text = "9"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Sprite" type="Sprite" parent="MemoryPict9"]
+
+[node name="AnimatedSprite" type="AnimatedSprite" parent="MemoryPict9/Sprite"]
+position = Vector2( 40, -3 )
+scale = Vector2( 0.25, 0.234375 )
+frames = SubResource( 5 )
+
+[node name="MemoryPict10" type="Node2D" parent="."]
+position = Vector2( 869, 560 )
+
+[node name="Label-" type="Label" parent="MemoryPict10"]
+margin_left = -40.0
+margin_top = -24.0
+margin_bottom = 18.0
+custom_fonts/font = SubResource( 4 )
+text = "-"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Sprite" type="Sprite" parent="MemoryPict10"]
+
+[node name="AnimatedSprite" type="AnimatedSprite" parent="MemoryPict10/Sprite"]
+position = Vector2( 40, -3 )
+scale = Vector2( 0.25, 0.234375 )
+frames = SubResource( 5 )
+
+[node name="CalcPict" type="Node2D" parent="."]
+position = Vector2( 1049, 906 )
+
+[node name="CalcLabel" type="Label" parent="CalcPict"]
+margin_left = 10.0
+margin_top = -66.0
+margin_right = 96.0
+margin_bottom = 59.0
+custom_colors/font_color = Color( 0.2, 0.235294, 0.27451, 1 )
+custom_fonts/font = SubResource( 6 )
+text = "+"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Sprite" type="Sprite" parent="CalcPict"]
+position = Vector2( 24, 54 )
+
+[node name="AnimatedSprite" type="AnimatedSprite" parent="CalcPict/Sprite"]
+position = Vector2( -130, -54 )
+scale = Vector2( 0.75, 0.75 )
+frames = SubResource( 5 )
+
+[node name="Sprite2" type="Sprite" parent="CalcPict"]
+position = Vector2( 186, 54 )
+
+[node name="AnimatedSprite2" type="AnimatedSprite" parent="CalcPict/Sprite2"]
+position = Vector2( 25, -54 )
+scale = Vector2( 0.75, 0.75 )
+frames = SubResource( 5 )
+
+[node name="ResultButton" type="Button" parent="."]
+margin_left = 749.0
+margin_top = 1094.0
+margin_right = 857.0
+margin_bottom = 1252.0
+rect_pivot_offset = Vector2( 54, 79 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="AnimatedSprite" type="AnimatedSprite" parent="ResultButton"]
+position = Vector2( 54, 74 )
+scale = Vector2( 0.28125, 0.28125 )
+frames = SubResource( 5 )
+
+[node name="ResultButton2" type="Button" parent="."]
+margin_left = 889.0
+margin_top = 1094.0
+margin_right = 997.0
+margin_bottom = 1252.0
+rect_pivot_offset = Vector2( 54, 79 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="AnimatedSprite" type="AnimatedSprite" parent="ResultButton2"]
+position = Vector2( 54, 74 )
+scale = Vector2( 0.28125, 0.28125 )
+frames = SubResource( 5 )
+
+[node name="ResultButton3" type="Button" parent="."]
+margin_left = 1027.0
+margin_top = 1094.0
+margin_right = 1135.0
+margin_bottom = 1252.0
+rect_pivot_offset = Vector2( 54, 79 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="AnimatedSprite" type="AnimatedSprite" parent="ResultButton3"]
+position = Vector2( 54, 74 )
+scale = Vector2( 0.28125, 0.28125 )
+frames = SubResource( 5 )
+
+[node name="ResultButton4" type="Button" parent="."]
+margin_left = 1165.0
+margin_top = 1094.0
+margin_right = 1273.0
+margin_bottom = 1252.0
+rect_pivot_offset = Vector2( 54, 79 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="AnimatedSprite" type="AnimatedSprite" parent="ResultButton4"]
+position = Vector2( 54, 74 )
+scale = Vector2( 0.28125, 0.28125 )
+frames = SubResource( 5 )
+
+[node name="ResultButton5" type="Button" parent="."]
+margin_left = 1303.0
+margin_top = 1094.0
+margin_right = 1411.0
+margin_bottom = 1252.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="AnimatedSprite" type="AnimatedSprite" parent="ResultButton5"]
+position = Vector2( 54, 74 )
+scale = Vector2( 0.28125, 0.28125 )
+frames = SubResource( 5 )
+
+[node name="AnswerMark" type="AnimatedSprite" parent="."]
+visible = false
+position = Vector2( 794, 1127 )
+scale = Vector2( 0.486666, 0.474999 )
+frames = SubResource( 7 )
+
+[node name="AnswerTimer" type="Timer" parent="."]
+wait_time = 0.5
+
+[node name="Panel2" type="Panel" parent="."]
+margin_left = 1050.0
+margin_top = 640.0
+margin_right = 1400.0
+margin_bottom = 730.0
+custom_styles/panel = SubResource( 8 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Panel3" type="Panel" parent="."]
+margin_left = 340.0
+margin_top = 622.0
+margin_right = 680.0
+margin_bottom = 712.0
+custom_styles/panel = SubResource( 8 )
+
+[node name="ScoreLabel" type="Label" parent="."]
+margin_left = 1060.0
+margin_top = 651.0
+margin_right = 1390.0
+margin_bottom = 722.0
+custom_colors/font_color = Color( 0.160784, 0.121569, 0.129412, 1 )
+custom_fonts/font = SubResource( 9 )
+text = "0"
+align = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="LastScore" type="Label" parent="."]
+margin_left = 50.0
+margin_top = 630.0
+margin_right = 340.0
+margin_bottom = 730.0
+rect_pivot_offset = Vector2( 80, 30 )
+custom_fonts/font = SubResource( 10 )
+text = "Score"
+
+[node name="Score" type="Label" parent="."]
+margin_left = 760.0
+margin_top = 648.0
+margin_right = 1050.0
+margin_bottom = 748.0
+rect_pivot_offset = Vector2( 80, 30 )
+custom_fonts/font = SubResource( 10 )
+text = "Score"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="LastScoreLabel" type="Label" parent="."]
+margin_left = 350.0
+margin_top = 633.0
+margin_right = 670.0
+margin_bottom = 704.0
+custom_colors/font_color = Color( 0.0313726, 0.027451, 0.027451, 1 )
+custom_fonts/font = SubResource( 9 )
+text = "0"
+align = 2
+
+[node name="BGM" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 16 )
+volume_db = 1.0
+
+[node name="HTTPRequest" type="HTTPRequest" parent="."]
+
+[node name="Label" type="Label" parent="."]
+margin_left = 20.0
+margin_top = 383.0
+margin_right = 380.0
+margin_bottom = 446.0
+custom_fonts/font = SubResource( 12 )
+text = "User Name"
+
+[node name="UserName" type="LineEdit" parent="."]
+margin_left = 310.0
+margin_top = 370.0
+margin_right = 690.0
+margin_bottom = 440.0
+custom_colors/font_color = Color( 0.12549, 0.211765, 0.294118, 1 )
+custom_fonts/font = SubResource( 13 )
+custom_styles/focus = SubResource( 15 )
+custom_styles/normal = SubResource( 14 )
+caret_blink = true
+script = ExtResource( 17 )
+
+[node name="HTTPRequest2" type="HTTPRequest" parent="."]
+
+[connection signal="button_down" from="StartButton" to="." method="_on_StartButton_button_down"]
+[connection signal="timeout" from="ScoreShowTimer" to="." method="_on_ScoreShowTimer_timeout"]
+[connection signal="timeout" from="QuestionTimer" to="." method="_on_QuestionTimer_timeout"]
+[connection signal="button_up" from="ResultButton" to="." method="_on_ResultButton_button_up"]
+[connection signal="button_up" from="ResultButton2" to="." method="_on_ResultButton2_button_up"]
+[connection signal="button_up" from="ResultButton3" to="." method="_on_ResultButton3_button_up"]
+[connection signal="button_up" from="ResultButton4" to="." method="_on_ResultButton4_button_up"]
+[connection signal="button_up" from="ResultButton5" to="." method="_on_ResultButton5_button_up"]
+[connection signal="timeout" from="AnswerTimer" to="." method="_on_AnswerTimer_timeout"]
+[connection signal="request_completed" from="HTTPRequest" to="." method="_on_HTTPRequest_request_completed"]
+[connection signal="request_completed" from="HTTPRequest2" to="." method="_on_HTTPRequest2_request_completed"]

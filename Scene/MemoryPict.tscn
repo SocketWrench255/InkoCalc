@@ -1,0 +1,72 @@
+[gd_scene load_steps=16 format=2]
+
+[ext_resource path="res://Makinas-4-Square.otf" type="DynamicFontData" id=1]
+[ext_resource path="res://character/obatan.png" type="Texture" id=2]
+[ext_resource path="res://character/okina.png" type="Texture" id=3]
+[ext_resource path="res://character/sekisei.png" type="Texture" id=4]
+[ext_resource path="res://character/taihaku.png" type="Texture" id=5]
+[ext_resource path="res://character/kozakura.png" type="Texture" id=6]
+[ext_resource path="res://character/shirohara.png" type="Texture" id=7]
+[ext_resource path="res://character/botan.png" type="Texture" id=8]
+[ext_resource path="res://character/youmu.png" type="Texture" id=9]
+[ext_resource path="res://character/momoiro.png" type="Texture" id=10]
+[ext_resource path="res://character/okame.png" type="Texture" id=11]
+[ext_resource path="res://character/kurumasaka.png" type="Texture" id=12]
+
+[sub_resource type="GDScript" id=1]
+script/source = "extends Node2D
+
+export var InkoNumber = 1
+# Declare member variables here. Examples:
+# var a = 2
+# var b = \"text\"
+
+
+
+# Called when the node enters the scene tree for the first time.
+func _ready():
+	$Label.text = \"1\"
+	pass # Replace with function body.
+
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+#func _process(delta):
+#	pass
+"
+
+[sub_resource type="DynamicFont" id=2]
+size = 30
+font_data = ExtResource( 1 )
+
+[sub_resource type="SpriteFrames" id=3]
+animations = [ {
+"frames": [ ExtResource( 6 ), ExtResource( 8 ), ExtResource( 12 ), ExtResource( 10 ), ExtResource( 2 ), ExtResource( 11 ), ExtResource( 3 ), ExtResource( 4 ), ExtResource( 7 ), ExtResource( 5 ), ExtResource( 9 ) ],
+"loop": true,
+"name": "inko",
+"speed": 0.0
+} ]
+
+[node name="MemoryPict" type="Node2D"]
+script = SubResource( 1 )
+
+[node name="Label" type="Label" parent="."]
+margin_left = -120.0
+margin_top = -36.0
+margin_right = -24.0
+margin_bottom = 36.0
+custom_fonts/font = SubResource( 2 )
+text = "0"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Sprite" type="Sprite" parent="."]
+
+[node name="AnimatedSprite" type="AnimatedSprite" parent="Sprite"]
+position = Vector2( 56, 0.999998 )
+scale = Vector2( 0.416667, 0.398438 )
+frames = SubResource( 3 )
+animation = "inko"
+playing = true
